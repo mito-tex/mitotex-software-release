@@ -1,0 +1,17 @@
+name: frac
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11.14
+  - pip=25.3
+  - numpy=2.4.1  
+  # - scikit-learn=1.8.0
+  # - scipy=1.17.0
+  # - matplotlib=3.10.8
+  - pandas=2.3.3
+  # - aicspylibczi=3.3.1
+  - tqdm=4.67.1
+  - pip:
+      - opencv-python-headless==4.12.0.88
+      - FreeAeon-Fractal==0.6.6

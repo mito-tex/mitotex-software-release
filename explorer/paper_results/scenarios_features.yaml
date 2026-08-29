@@ -1,0 +1,72 @@
+All:
+    description: Separate all classes in all days
+    features:
+        - log_s_4.0_ih_skew_fbn_n32
+        - wavelet_coif1_lh_level_2_invar_cm_info_corr2_d1_2d_s_mrg_fbn_n32
+    mean_f1_macro: 0.3087361127755594
+    std_f1_macro:  0.012805081445209948
+
+Day_1_merged:
+    description: Day 1 merged
+    features:
+        - log_s_2.0_ih_skew_fbn_n32
+        - log_s_2.0_cm_corr_d1_2d_s_mrg_fbn_n32
+    mean_f1_macro: 0.41444442018956507
+    std_f1_macro:  0.018896503709258532
+
+Day_1_merged_Day_2_omitted:
+    description: Day 1 merged, Day 2 absent
+    features:
+        - log_s_2.0_ih_skew_fbn_n32
+        - cm_diff_var_d16_2d_avg_fbn_n32
+    mean_f1_macro: 0.5462518600754183
+    std_f1_macro:  0.013245165921807802
+
+Day_3:
+    description: Separate the media in Day 3
+    features:
+        - log_s_2.0_ih_skew_fbn_n32
+        - log_s_1.0_cm_corr_d1_2d_s_mrg_fbn_n32
+    mean_f1_macro: 0.7780342102254053
+    std_f1_macro:  0.0238007290224692
+
+YPGal:
+    description: Separate YPGal from the rest
+    features:
+        - log_s_2.0_cm_corr_d1_2d_s_mrg_fbn_n32
+        - gabor_s_4.0_g_1.0_l_8.0_2D_rlm_lrhge_2d_s_mrg_fbn_n32
+    mean_f1_macro: 0.5344058459298973
+    std_f1_macro:  0.030516686539841867
+
+YPGly:
+    description: Separate YPGly from the rest
+    features:
+        - log_s_2.0_cm_corr_d1_2d_s_mrg_fbn_n32
+        - log_s_1.0_cm_info_corr2_d1_2d_s_mrg_fbn_n32
+    mean_f1_macro: 0.6561239350704802
+    std_f1_macro:  0.03279283266840629
+
+YPD:
+    description: Separate YPD from the rest
+    features:
+        - log_s_4.0_stat_skew
+        - gabor_s_2.0_g_1.0_l_8.0_2D_ngl_dcnu_d1_a0.0_2d_fbn_n32
+    mean_f1_macro: 0.8150156482805936
+    std_f1_macro:  0.021394256597942685
+
+AS:
+    description: Separate AS from the rest
+    features:
+        - log_s_2.0_cm_corr_d1_2d_s_mrg_fbn_n32
+        - gabor_s_4.0_g_1.0_l_8.0_2D_rlm_rl_entr_2d_s_mrg_fbn_n32
+    mean_f1_macro: 0.7428169684049274
+    std_f1_macro:  0.03792313490145998
+
+SD:
+    description: Separate SD from the rest
+    features:
+        - gabor_s_4.0_g_1.0_l_8.0_2D_stat_iqr
+        - wavelet_coif1_lh_level_3_invar_stat_p10
+    mean_f1_macro: 0.9858987529661692
+    std_f1_macro:  0.008469488641027255
+

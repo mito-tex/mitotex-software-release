@@ -1,0 +1,19 @@
+name: mirp
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11.14
+  - pip=25.3
+  - numpy=2.4.1  
+  # - scikit-learn=1.8.0
+  # - scipy=1.17.0
+  # - matplotlib=3.10.8
+  - pandas=2.3.3
+  # - aicspylibczi=3.3.1
+  - tqdm=4.67.1
+  - joblib # for mirp paraller processing
+  - pip:
+      - opencv-python-headless==4.12.0.88
+      - mirp==2.4.2
+      # - git+https://github.com/oncoray/mirp.git@v2.3.2#egg=mirp

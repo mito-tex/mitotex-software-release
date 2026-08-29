@@ -1,0 +1,9 @@
+name: snakemake_zenodo
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - snakemake >=8.0.0
+  - pip
+  - pip:
+      - snakemake-storage-plugin-zenodo

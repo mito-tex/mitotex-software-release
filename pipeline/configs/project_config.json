@@ -1,0 +1,8 @@
+{
+    "mirp_num_threads" : 5,
+    "select_best_n_num_threads" : 5,
+    "cnn_training_cpu_threads": 5,
+    "mirp_feature_extraction_batch_size": 50,
+
+    "output_dir": "results"
+}

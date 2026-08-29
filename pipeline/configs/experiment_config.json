@@ -1,0 +1,133 @@
+{
+   "OLD_n_features_exhaustive_search" : [0,1,2,3],
+   "n_features_exhaustive_search" : [2],
+
+    "feature_selection_corr_limit": 0.5,
+    "LDA": 0.9,
+
+
+    "knn_distance_wights" : ["distance"],
+
+    "experiments":{
+        "All":{
+            "description": "Separate all classes in all days",
+            "class_mapping":{
+                "AS_D1"    : "AS_D1",
+                "AS_D3"    : "AS_D3",
+                "SD_D1"    : "SD_D1",
+                "SD_D3"    : "SD_D3",
+                "YPD_D1"   : "YPD_D1",
+                "YPD_D2"   : "YPD_D2",
+                "YPD_D3"   : "YPD_D3",
+                "YPGly_D1" : "YPGly_D1",
+                "YPGly_D2" : "YPGly_D2",
+                "YPGly_D3" : "YPGly_D3",
+                "YPGal_D1" : "YPGal_D1",
+                "YPGal_D2" : "YPGal_D2",
+                "YPGal_D3" : "YPGal_D3"
+            }
+        },
+        "Day_1_merged":{
+            "description": "Day 1 merged",
+            "class_mapping":{
+                "AS_D1"    : "D1",
+                "AS_D3"    : "AS_D3",
+                "SD_D1"    : "D1",
+                "SD_D3"    : "SD_D3",
+                "YPD_D1"   : "D1",
+                "YPD_D2"   : "YPD_D2",
+                "YPD_D3"   : "YPD_D3",
+                "YPGly_D1" : "D1",
+                "YPGly_D2" : "YPGly_D2",
+                "YPGly_D3" : "YPGly_D3",
+                "YPGal_D1" : "D1",
+                "YPGal_D2" : "YPGal_D2",
+                "YPGal_D3" : "YPGal_D3"
+            }
+        },
+        "Day_1_merged_Day_2_omitted":{
+            "description": "Day 1 merged, Day 2 absent",
+            "class_mapping":{
+                "AS_D1" : "D1",
+                "AS_D3" : "AS_D3",
+                "SD_D1"      : "D1",
+                "SD_D3"      : "SD_D3",
+                "YPD_D1"     : "D1",
+                "YPD_D3"     : "YPD_D3",
+                "YPGly_D1"   : "D1",
+                "YPGly_D3"   : "YPGly_D3",
+                "YPGal_D1"   : "D1",
+                "YPGal_D3"   : "YPGal_D3"
+            }
+        },
+        "Day_3":{
+            "description": "Separate the media in Day 3",
+            "class_mapping":{
+                "AS_D3"    : "AS_D3",
+                "SD_D3"    : "SD_D3",
+                "YPD_D3"   : "YPD_D3",
+                "YPGly_D3" : "YPGly_D3",
+                "YPGal_D3" : "YPGal_D3"
+            }
+        },
+
+        "AS":{
+            "description": "Separate AS from the rest",
+            "class_mapping":{
+                "AS_D1"    : "D1",
+                "AS_D3"    : "AS_D3",
+                "SD_D1"    : "D1",
+                "YPD_D1"   : "D1",
+                "YPGly_D1" : "D1",
+                "YPGal_D1" : "D1"
+            }
+        },
+        "SD":{
+            "description": "Separate SD from the rest",
+            "class_mapping":{
+                "AS_D1"    : "D1",
+                "SD_D1"    : "D1",
+                "SD_D3"    : "SD_D3",
+                "YPD_D1"   : "D1",
+                "YPGly_D1" : "D1",
+                "YPGal_D1" : "D1"
+            }
+        },
+        "YPD":{
+            "description": "Separate YPD from the rest",
+            "class_mapping":{
+                "AS_D1"    : "D1",
+                "SD_D1"    : "D1",
+                "YPD_D1"   : "D1",
+                "YPD_D2"   : "YPD_D2",
+                "YPD_D3"   : "YPD_D3",
+                "YPGly_D1" : "D1",
+                "YPGal_D1" : "D1"
+            }
+        },
+        "YPGal":{
+            "description": "Separate YPGal from the rest",
+            "class_mapping":{
+                "AS_D1"    : "D1",
+                "SD_D1"    : "D1",
+                "YPD_D1"   : "D1",
+                "YPGly_D1" : "D1",
+                "YPGal_D1" : "D1",
+                "YPGal_D2" : "YPGal_D2",
+                "YPGal_D3" : "YPGal_D3"
+            }
+        },
+        "YPGly":{
+            "description": "Separate YPGly from the rest",
+            "class_mapping":{
+                "AS_D1"    : "D1",
+                "SD_D1"    : "D1",
+                "YPD_D1"   : "D1",
+                "YPGly_D1" : "D1",
+                "YPGly_D2" : "YPGly_D2",
+                "YPGly_D3" : "YPGly_D3",
+                "YPGal_D1" : "D1"
+            }
+        }
+    }
+}

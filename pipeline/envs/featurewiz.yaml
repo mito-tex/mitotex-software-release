@@ -1,0 +1,11 @@
+name: featurewiz
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11.14
+  - pip=25.3
+  - numpy=1.26.4
+  - pandas=2.3.3
+  - pip:
+    - featurewiz==0.6.1

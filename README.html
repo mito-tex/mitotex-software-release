@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Interpretable Mitochondrial Texture Analysis bundle
+README</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1
+id="software-for-interpretable-mitochondrial-texture-analysis">Software
+for Interpretable Mitochondrial Texture Analysis</h1>
+<p>This archive contains two related software components used to
+extract, select, inspect, visualize, and annotate mitochondrial image
+features.</p>
+<h2 id="components">Components</h2>
+<h3 id="1-explorer--try-the-paper-results">1. <code>explorer/</code> —
+try the paper results</h3>
+<p>Mito Explorer provides an interactive feature plot and annotation
+interface, plus a patch viewer for inspecting source images in selected
+feature spaces. It includes the precomputed results used for the paper
+and can be tried immediately without running the feature-extraction
+pipeline.</p>
+<p>From the archive root, launch Feature Explorer:</p>
+<pre class="console"><code>cd explorer
+./feature_explorer.py</code></pre>
+<p>Or, from the same <code>explorer/</code> directory, launch Patch
+Explorer:</p>
+<pre class="console"><code>./patch_explorer.py</code></pre>
+<p>See the
+<a href="explorer/README.html" target="_blank" rel="noopener">Explorer
+README</a> for detailed instructions.</p>
+<h4 id="dataset">Dataset</h4>
+<p>The image, mask, and metadata dataset is not bundled with this
+software. It is published separately, and the software downloads the
+required files from that public record when needed.</p>
+<p><a href="https://doi.org/10.5281/zenodo.21261399"><img
+src="https://zenodo.org/badge/DOI/10.5281/zenodo.21261399.svg"
+alt="Dataset DOI: 10.5281/zenodo.21261399" /></a></p>
+<p>By default, both Explorer and the pipeline share a dataset directory
+beside their component directories. Missing files are downloaded and
+extracted there automatically:</p>
+<pre class="text"><code>&lt;archive-root&gt;/
+├── explorer/
+├── pipeline/
+└── yeast-mitochondria-patches/
+    ├── metadata.csv
+    ├── images/
+    └── masks/</code></pre>
+<h3 id="2-pipeline--optionally-recompute-the-features">2.
+<code>pipeline/</code> — optionally recompute the features</h3>
+<p>The Mito Feature Pipeline downloads the referenced microscopy data,
+extracts image features, evaluates classification scenarios, and
+prepares selected feature definitions. Running it is optional for trying
+the Explorers.</p>
+<p>To reproduce the computational outputs, run the complete Snakemake
+workflow from the archive root:</p>
+<pre class="console"><code>cd pipeline
+conda env create -f environment.yaml
+conda activate snakemake_zenodo
+snakemake --cores all --use-conda</code></pre>
+<p>After a successful run, both Explorer applications automatically use
+the complete result set under <code>pipeline/results/</code> instead of
+their bundled paper copies. The generated
+<code>feature_explanations.yaml</code> is intentionally a template whose
+descriptions contain <code>TODO</code> placeholders. Completing those
+explanations is a manual step in Feature Explorer and requires the
+domain expertise described in the paper. The pipeline alone does not
+reproduce the paper's completed feature explanations.</p>
+<p>The bundled paper-result files are curated for review and are
+therefore not expected to be byte-for-byte identical to fresh pipeline
+outputs:</p>
+<ul>
+<li><code>paper_results/features.csv</code> contains only the features
+retained for the paper's selected scenarios, while
+<code>pipeline/results/features/features.csv</code> contains the wider
+extracted feature table;</li>
+<li><code>paper_results/feature_explanations.yaml</code> contains
+completed annotations, while the pipeline creates a <code>TODO</code>
+template. YAML key order may also differ and has no semantic
+meaning.</li>
+</ul>
+<p>Compare selected feature values and explanation fields by their
+identifiers, not by file size, checksum, column order, or YAML key
+order.</p>
+<p>If the pipeline output is absent or incomplete, both Explorer
+applications keep using the complete paper-result set and report that
+choice; files from the two sets are never mixed.</p>
+<p>You can then return to <code>explorer/</code> and launch either
+application again to inspect the recomputed features and, in Feature
+Explorer, complete the manual annotations.</p>
+<p>See the
+<a href="pipeline/README.html" target="_blank" rel="noopener">pipeline
+README</a> for detailed setup and usage instructions.</p>
+<h2 id="archive-integrity-and-documentation">Archive integrity and
+documentation</h2>
+<p>See <code>MANIFEST.sha256</code> for file checksums.
+Component-specific setup and usage instructions are included in each
+component directory. Every bundled Markdown README also has a sibling
+standalone HTML rendering for convenient viewing without a Markdown
+renderer.</p>
+<h2 id="citation-and-license">Citation and license</h2>
+<p>Please cite the exact archived release. Machine-readable citation
+metadata is provided in <a
+href="CITATION.cff"><code>CITATION.cff</code></a>; its version is filled
+from the release identifier when the archive is built. DOI: <a
+href="https://doi.org/10.5281/zenodo.21825095">https://doi.org/10.5281/zenodo.21825095</a>.</p>
+<p>This software is distributed under the BSD 3-Clause License. See <a
+href="LICENSE"><code>LICENSE</code></a>.</p>
+</body>
+</html>

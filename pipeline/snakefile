@@ -1,0 +1,171 @@
+import json
+import os
+from pathlib import Path
+
+# The dataset is an open, published Zenodo record; no access token is needed.
+storage:
+    provider="zenodo",
+    access_token=""
+
+RECORD_ID = "21261399"
+DATASET_DIR = Path(
+    os.environ.get(
+        "YEAST_MITOCHONDRIA_PATCHES_DIR",
+        Path(workflow.basedir).resolve().parent / "yeast-mitochondria-patches",
+    )
+).expanduser().resolve()
+
+
+
+with open("configs/project_config.json", 'r') as f:
+    project_config = json.load(f)
+with open("configs/experiment_config.json", 'r') as f:
+    experiment_config = json.load(f)
+
+
+
+OUTPUT_DIR = project_config["output_dir"]
+EXPERIMTN_DIR = f"{OUTPUT_DIR}/experiments"
+EXTRACTED_FEATURES_DIR = f"{OUTPUT_DIR}/features"
+
+
+
+TARGET_TOP_SELECTIONS = [
+    f"{EXPERIMTN_DIR}/{exp_name}/top_{n}_features_w_{w}.csv"
+    for exp_name in experiment_config["experiments"].keys()
+    for n in experiment_config["n_features_exhaustive_search"]
+    for w in experiment_config["knn_distance_wights"]
+]
+
+
+
+rule all:
+    input:
+        f'{project_config["output_dir"]}/scenarios_features.yaml',
+        f'{project_config["output_dir"]}/feature_explanations.yaml'
+
+
+rule extract_zenodo_zips:
+    input:
+        # Snakemake fills {folder} with "images" or "masks" and retrieves the
+        # corresponding ZIP from the published record.
+        zipped = storage.zenodo(f"zenodo://record/{RECORD_ID}/{{folder}}.zip")
+    output:
+        marker = touch(f"{DATASET_DIR}/{{folder}}.done")
+    conda:
+        "envs/unzip.yaml"
+    shell:
+        """
+        mkdir -p {DATASET_DIR}
+        unzip -qo {input.zipped} -d {DATASET_DIR}
+        """
+
+rule fetch_zenodo_csv:
+    input:
+        raw_file = storage.zenodo(f"zenodo://record/{RECORD_ID}/metadata.csv")
+    output:
+        f"{DATASET_DIR}/metadata.csv"
+    shell:
+        """
+        # Snakemake downloads the file securely to a hidden cache,
+        # so we just copy it to your final desired location.
+        cp {input.raw_file} {output}
+        """
+
+
+rule extract_mirp_features:
+    input:
+        f"{DATASET_DIR}/images.done",
+        f"{DATASET_DIR}/masks.done"
+    output:
+        marker = touch(f"{EXTRACTED_FEATURES_DIR}/mirp_features.done")
+    conda:
+        "envs/mirp.yaml"
+    shell:
+        f"""
+        python scripts/mirp_extract.py --output {EXTRACTED_FEATURES_DIR}/mirp_features.csv
+        """
+
+rule extract_factal_features:
+    input:
+        f"{DATASET_DIR}/images.done",
+        f"{DATASET_DIR}/masks.done"
+    output:
+        marker = touch(f"{EXTRACTED_FEATURES_DIR}/frac_features.done")
+    conda:
+        "envs/frac.yaml"
+    shell:
+        f"""
+        python scripts/frac_extract.py --output {EXTRACTED_FEATURES_DIR}/frac_features.csv
+        """
+
+
+rule join_extracted_features:
+    input:
+        file1=f"{EXTRACTED_FEATURES_DIR}/mirp_features.done",
+        file2=f"{EXTRACTED_FEATURES_DIR}/frac_features.done",
+    output:
+        f"{EXTRACTED_FEATURES_DIR}/features.csv",
+    shell:
+        f"""
+        python -c "
+            import pandas as pd
+            df1 = pd.read_csv('{EXTRACTED_FEATURES_DIR}/mirp_features.csv')
+            df2 = pd.read_csv('{EXTRACTED_FEATURES_DIR}/frac_features.csv')
+            pd.merge(df1, df2, on='id').to_csv('{{output}}', index=False)
+            "
+        """
+
+rule filter_features:
+    input:
+        extracted_features = f"{EXTRACTED_FEATURES_DIR}/features.csv",
+        metadata = f"{DATASET_DIR}/metadata.csv"
+    output:
+        f'{EXPERIMTN_DIR}/{{exp_name}}/filtered_features_cl_{{cl}}.txt'
+    conda:
+        "envs/featurewiz.yaml"
+    shell:
+        """
+        python scripts/featurewiz_filter_features.py --experiment_name {wildcards.exp_name} --corr_limit {wildcards.cl} --features {input.extracted_features} --output {output}
+        """
+
+
+rule find_best_n_features:
+    input:
+        extracted_features = f"{EXTRACTED_FEATURES_DIR}/features.csv",
+        preselected_features = f'{EXPERIMTN_DIR}/{{exp_name}}/filtered_features_cl_{str(experiment_config["feature_selection_corr_limit"])}.txt',
+        labels = f"{DATASET_DIR}/metadata.csv"
+    output:
+        f"{EXPERIMTN_DIR}/{{exp_name}}/top_{{n}}_features_w_{{w}}.csv"
+    threads:
+        project_config["select_best_n_num_threads"]
+    conda:
+        "envs/ml.yaml"
+    shell:
+        """
+        python scripts/select_best_n_features.py --experiment_name {wildcards.exp_name} --select_n_features {wildcards.n} --weights {wildcards.w} --features {input.extracted_features} --pre_selected_features_path {input.preselected_features} --output {output}
+        """
+
+
+rule create_scenarios_features:
+    input:
+        TARGET_TOP_SELECTIONS
+    output:
+        f"{OUTPUT_DIR}/scenarios_features.yaml"
+    shell:
+        f"""
+        python scripts/create_scenarios_features.py --output {{output}} --exp_dir {EXPERIMTN_DIR}
+        """
+
+
+
+rule feature_explanations:
+    input:
+        TARGET_TOP_SELECTIONS
+    output:
+        f"{OUTPUT_DIR}/feature_explanations.yaml"
+    shell:
+        f"""
+        python scripts/create_feature_explanations_template.py --output {{output}} --exp_dir {EXPERIMTN_DIR}
+        """
+

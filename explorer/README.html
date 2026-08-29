@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Interpretable Mitochondrial Texture Analysis explorer
+README</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<h1 id="mito-explorer">Mito Explorer</h1>
+<p>This repository has two applications, both runnable from the
+repository root:</p>
+<ul>
+<li><code>feature_explorer.py</code></li>
+<li><code>patch_explorer.py</code></li>
+</ul>
+<p>Both applications select their result files as one complete set. If
+the sibling pipeline has produced
+<code>results/features/features.csv</code>,
+<code>results/scenarios_features.yaml</code>, and
+<code>results/feature_explanations.yaml</code>, the applications use
+those recomputed files. Otherwise they use the paper-result copies in
+this directory. An incomplete pipeline result set is never mixed with
+paper-result files; the applications warn and use the complete
+paper-result set instead.</p>
+<h2 id="notes-on-uv">Notes on <code>uv</code></h2>
+<p>Both applications are Python-based and use <code>uv</code> to install
+their dependencies in isolated environments, avoiding a separate manual
+setup step.</p>
+<p>If your system does not have <code>uv</code> installed, please
+install it following the <a
+href="https://docs.astral.sh/uv/getting-started/installation/">official
+instructions</a>. Since <code>uv</code> is a relatively new package
+manager, you may also want to <a href="https://docs.astral.sh/uv/">read
+about it</a> first.</p>
+<h2 id="feature-explorer">Feature Explorer</h2>
+<p>Opens an interactive <a
+href="https://marimo.io"><code>marimo</code></a>-based application for
+exploring pairs of mitochondrial image features. The app combines a
+joint scatter plot, marginal KDEs, feature explanations, and an
+annotation editor.</p>
+<p>On macOS, Linux, or Git Bash:</p>
+<pre class="console"><code>./feature_explorer.py</code></pre>
+<p>On Windows PowerShell or Command Prompt:</p>
+<pre class="console"><code>.\feature_explorer.cmd</code></pre>
+<p>The executable script uses <code>uv</code> and
+<code>feature_explorer.py.lock</code> to create the locked environment,
+then starts the Marimo application. The Windows launcher invokes the
+same script without relying on Unix shebang support.</p>
+<h3 id="controls">Controls</h3>
+<ul>
+<li><strong>View / Annotate</strong> switches between rendered
+explanations and editable annotation forms. Whenever a scenario is
+selected, the application starts in Annotate mode if any editable
+explanation field for either of its features is blank or contains
+<code>TODO</code>; otherwise it starts in View mode.</li>
+<li><strong>Scenario</strong> selects a feature pair. Its labels come
+from the descriptions in <code>scenarios_features.yaml</code>. Selecting
+<strong>Day 3</strong> checks only Day 3; selecting <strong>Day 1
+merged, Day 2 absent</strong> checks Days 1 and 3. Other scenarios check
+all days. Scenario changes do not alter the experiment filters.</li>
+<li><strong>Day 1–3</strong> and <strong>Experiment 1–2</strong>
+independently filter the plotted samples.</li>
+<li><strong>Show covariance ellipses</strong> controls the
+experiment-specific covariance ellipses and is enabled by default.</li>
+</ul>
+<p>At least one day and one experiment must remain selected.</p>
+<h3 id="plot-encoding">Plot encoding</h3>
+<p>Growth medium is represented by color. Experiment is represented
+independently:</p>
+<table>
+<thead>
+<tr>
+<th>Experiment</th>
+<th>Scatter marker</th>
+<th>KDE and ellipse line</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Circle</td>
+<td>Solid</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>x</code></td>
+<td>Dashed</td>
+</tr>
+</tbody>
+</table>
+<p>The legend combines medium and experiment. Marginal KDEs and
+covariance ellipses are calculated separately for every visible
+medium–experiment group. Axis labels use the human-readable feature
+titles, while limits are shared across filter selections and use the
+0.003–0.997 quantiles of the complete feature table.</p>
+<p>Each rendered plot is saved automatically as PNG and PDF in
+<code>figures/</code>. The filename records the scenario ID, selected
+days, selected experiments, and whether covariance ellipses were
+enabled.</p>
+<h3 id="editing-feature-explanations">Editing feature explanations</h3>
+<p>Switch from <strong>View</strong> to <strong>Annotate</strong> to
+edit both currently displayed feature explanations. The feature IDs are
+read-only. <strong>Update file</strong> validates all fields and writes
+both entries to the active <code>feature_explanations.yaml</code> while
+preserving YAML scalar formatting. In Annotate mode, the relative path
+of the file being edited is displayed below the button. Each file
+replacement is atomic.</p>
+<p>Switching back to View mode renders the saved Markdown
+explanations.</p>
+<h3 id="data-files">Data files</h3>
+<p>The bundled paper-result files are stored together under
+<code>paper_results/</code>. The Feature Explorer reads:</p>
+<ul>
+<li><code>paper_results/features.csv</code> for extracted feature
+values;</li>
+<li>the shared <code>yeast-mitochondria-patches/metadata.csv</code> for
+image IDs, experiment IDs, days, and growth media;</li>
+<li><code>paper_results/scenarios_features.yaml</code> for scenario
+descriptions and feature pairs;</li>
+<li><code>paper_results/feature_explanations.yaml</code> for displayed
+and editable explanations.</li>
+</ul>
+<p>The paper feature table is intentionally narrower than a fresh
+pipeline output: it contains only the features retained for the paper's
+selected scenarios, whereas
+<code>pipeline/results/features/features.csv</code> contains the wider
+extracted feature table. The paper explanations file contains completed
+manual annotations. Its YAML keys may appear in a different order than
+those in the pipeline-generated template; entries should be matched by
+feature key, not by position.</p>
+<p>The interface labels the selected set as <strong>paper
+results</strong> or <strong>recomputed results</strong>. When recomputed
+results are selected, annotation updates are written to the pipeline's
+<code>results/feature_explanations.yaml</code>. The pipeline initially
+generates this file as a template with <code>TODO</code> placeholders;
+completing its explanatory text is an intentional manual step.</p>
+<p>If the metadata file is missing, the application downloads it through
+<code>zenodo_fetcher.py</code>.</p>
+<h2 id="patch-explorer">Patch Explorer</h2>
+<p>Opens a resizable interactive window of image thumbnails positioned
+by their selected features. The window title shows the selected
+scenario.</p>
+<p>On macOS, Linux, or Git Bash:</p>
+<pre class="console"><code>./patch_explorer.py</code></pre>
+<p>On Windows PowerShell or Command Prompt:</p>
+<pre class="console"><code>.\patch_explorer.cmd</code></pre>
+<p>The executable script invokes <code>uv</code> through its shebang and
+uses the checked-in lockfile. The Windows launcher invokes the same
+command without relying on Unix shebang support.</p>
+<p>The viewer uses the same selected features and scenarios result set
+as Feature Explorer, together with the shared metadata file. It builds
+thumbnails from corresponding images and masks under
+<code>yeast-mitochondria-patches/images/</code> and
+<code>yeast-mitochondria-patches/masks/</code>; missing archives are
+downloaded through <code>zenodo_fetcher.py</code>.</p>
+<p>By default, Explorer and the sibling feature pipeline share
+<code>yeast-mitochondria-patches/</code> beside their repository
+directories. Set <code>YEAST_MITOCHONDRIA_PATCHES_DIR</code> to an
+absolute path to use another location. Both applications must receive
+the same value when the variable is overridden.</p>
+<p>Patch Explorer uses the <code>Day_3</code> scenario by default.
+Select another scenario by its ID:</p>
+<pre class="console"><code>./patch_explorer.py --scenario YPGal</code></pre>
+<p>List the valid IDs together with their human-readable
+descriptions:</p>
+<pre class="console"><code>./patch_explorer.py --list-scenarios</code></pre>
+<p>On Windows, the same arguments are forwarded by the launcher:</p>
+<pre class="console"><code>.\patch_explorer.cmd --scenario YPGal</code></pre>
+<p>The selected scenario ID and description are included in the viewer
+window title.</p>
+<h3 id="mouse">Mouse</h3>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Left-drag</td>
+<td>Pan</td>
+</tr>
+<tr>
+<td>Right-drag up</td>
+<td>Zoom in</td>
+</tr>
+<tr>
+<td>Right-drag down</td>
+<td>Zoom out</td>
+</tr>
+</tbody>
+</table>
+<h3 id="keyboard">Keyboard</h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><kbd>C</kbd></td>
+<td>Toggle between monochrome green and color-coded patches</td>
+</tr>
+<tr>
+<td><kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd></td>
+<td>Toggle patches from day 1, 2, or 3</td>
+</tr>
+<tr>
+<td><kbd>[</kbd></td>
+<td>Toggle Experiment 1</td>
+</tr>
+<tr>
+<td><kbd>]</kbd></td>
+<td>Toggle Experiment 2</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/-D-CC0000" alt="D" /></td>
+<td>Toggle YPD</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/-L-CC6E00" alt="L" /></td>
+<td>Toggle YPGal</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/-Y-00CC33" alt="Y" /></td>
+<td>Toggle YPGly</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/-A-007ACC" alt="A" /></td>
+<td>Toggle AS</td>
+</tr>
+<tr>
+<td><img src="https://img.shields.io/badge/-S-8800CC" alt="S" /></td>
+<td>Toggle SD</td>
+</tr>
+<tr>
+<td><kbd>0</kbd></td>
+<td>Reset all day, medium, and experiment filters</td>
+</tr>
+<tr>
+<td><kbd>Q</kbd> or <kbd>Esc</kbd></td>
+<td>Quit</td>
+</tr>
+</tbody>
+</table>
+<p>Day, medium, and experiment shortcuts act as independent toggles and
+can be combined. Both experiments are visible initially; the window
+title reports the currently active days and experiments.</p>
+<h3 id="color-coding">Color coding</h3>
+<p>The viewer starts in monochrome green. Press <kbd>C</kbd> to tint
+each patch by growth medium and day according to <code>colors.py</code>.
+Each medium has a distinct hue, and later days use progressively darker
+shades:</p>
+<table>
+<thead>
+<tr>
+<th>Medium</th>
+<th>Day 1</th>
+<th>Day 2</th>
+<th>Day 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YPD</td>
+<td><img src="https://img.shields.io/badge/-Day%201-F29191"
+alt="Day 1" /></td>
+<td><img src="https://img.shields.io/badge/-Day%202-E64343"
+alt="Day 2" /></td>
+<td><img src="https://img.shields.io/badge/-Day%203-CC0000"
+alt="Day 3" /></td>
+</tr>
+<tr>
+<td>YPGal</td>
+<td><img src="https://img.shields.io/badge/-Day%201-F2C491"
+alt="Day 1" /></td>
+<td><img src="https://img.shields.io/badge/-Day%202-E69543"
+alt="Day 2" /></td>
+<td><img src="https://img.shields.io/badge/-Day%203-CC6E00"
+alt="Day 3" /></td>
+</tr>
+<tr>
+<td>YPGly</td>
+<td><img src="https://img.shields.io/badge/-Day%201-91F2A5"
+alt="Day 1" /></td>
+<td><img src="https://img.shields.io/badge/-Day%202-43E669"
+alt="Day 2" /></td>
+<td><img src="https://img.shields.io/badge/-Day%203-00CC33"
+alt="Day 3" /></td>
+</tr>
+<tr>
+<td>AS</td>
+<td><img src="https://img.shields.io/badge/-Day%201-91C8F2"
+alt="Day 1" /></td>
+<td><img src="https://img.shields.io/badge/-Day%202-43A0E6"
+alt="Day 2" /></td>
+<td><img src="https://img.shields.io/badge/-Day%203-007ACC"
+alt="Day 3" /></td>
+</tr>
+<tr>
+<td>SD</td>
+<td><img src="https://img.shields.io/badge/-Day%201-D491F2"
+alt="Day 1" /></td>
+<td><img src="https://img.shields.io/badge/-Day%202-B443E6"
+alt="Day 2" /></td>
+<td><img src="https://img.shields.io/badge/-Day%203-8800CC"
+alt="Day 3" /></td>
+</tr>
+</tbody>
+</table>
+<hr />
+</body>
+</html>

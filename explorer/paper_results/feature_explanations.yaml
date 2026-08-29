@@ -1,0 +1,142 @@
+gabor_s_4.0_g_1.0_l_8.0_2D_stat_iqr:
+  filter: "Gabor ($\\lambda=8$, $\\sigma=4$, $\\gamma=1$)"
+  stats: IQR (Interquartile Range)
+  title: Spread of coarse directional responses
+  technical: >
+    Computes the interquartile range of the original, non-discretized Gabor responses within the analyzed cell mask: the 75th percentile minus the 25th percentile.
+  image: >
+    Low values were generally associated with smoother, more weakly contrasted image content, whereas higher values tended to show a broader range of local directional contrasts. However, this relationship was not strictly monotonic, and individual patches could depart substantially from the overall trend.
+  biology: >
+    May reflect differences in the prominence and contrast of mitochondrial structures, but the sampled images do not support interpreting it as a direct measure of tubulation, fragmentation, abundance, or connectivity.
+
+log_s_2.0_cm_corr_d1_2d_s_mrg_fbn_n32:
+  filter: "LoG ($\\sigma=2$)"
+  stats: Correlation via GLCM
+  title: Local organization of small mitochondrial structures
+  technical: >
+    Computes GLCM correlation between neighboring ($d=1$) LoG responses after discretization into 32 fixed-number bins. Two-dimensional GLCMs from different directions are merged before the feature is calculated.
+  image: >
+    Low values tended to occur in diffuse, blurred, or crowded fine-scale image patterns. Higher values more often showed clearer separation between neighboring structures and coarser local organization. These included elongated tubules as well as shorter fragments.
+  biology: >
+    May reflect how clearly mitochondrial structures are resolved and separated at the LoG scale. Higher values are compatible with organized tubules, but are not a direct measure of mitochondrial continuity or branching. Focus, contrast, and structure spacing may also affect the value.
+
+wavelet_coif1_lh_level_3_invar_stat_p10:
+  filter: "Invariant Coiflet-1 wavelet (LH, level 3)"
+  stats: 10th percentile
+  title: Lower tail of coarse directional responses
+  technical: >
+    Computes the 10th percentile directly from the original, non-discretized pseudo-rotation-invariant level-3 Coiflet-1 LH responses within the analyzed cell mask.
+  image: >
+    Low values were commonly associated with diffuse, blurred, or broad low-detail signal, whereas high values were associated with clearly resolved coarse directional structures, often elongated or parallel. Because this is a lower-tail signed wavelet statistic, the numerical direction depends on the wavelet-response convention.
+  biology: >
+    Within this dataset, higher values tended to occur in cells with prominent elongated mitochondrial tubules or bundles, while lower values occurred more often in diffuse or poorly resolved patterns. This empirical association should not be treated as a universal monotonic measure of tubule abundance.
+
+log_s_1.0_cm_info_corr2_d1_2d_s_mrg_fbn_n32:
+  filter: "LoG ($\\sigma=1$)"
+  stats: IMC2 (Information Correlation 2) via GLCM
+  title: Dependency of neighboring fine-scale responses
+  technical: >
+    After discretizing the LoG response into 32 fixed-number bins, merges two-dimensional GLCMs across directions at distance 1 and computes the second Information Measure of Correlation (IMC2) from the joint and marginal gray-level distributions.
+  image: >
+    In the sampled images, low values were associated with faint, blurred, or weakly resolved mitochondrial patterns, whereas high values occurred when mitochondrial edges and internal structures were clearly resolved. Both elongated tubules and punctate structures can produce high values, indicating that the feature reflects local response dependency and feature prominence rather than one specific morphology.
+  biology: >
+    May distinguish clearly resolved mitochondrial structures from diffuse or poorly resolved signal. High values do not specifically imply connected tubules: organized puncta and fragments can produce similarly strong local dependency. Image contrast, focus, and labeling intensity can therefore influence the feature alongside mitochondrial morphology.
+
+log_s_4.0_stat_skew:
+  filter: "LoG ($\\sigma=4$)"
+  stats: Skewness of the LoG responses (not binned)
+  title: Asymmetry of coarser-scale responses (not binned)
+  technical: >
+    Computes population skewness directly from the original, non-discretized LoG response values within the analyzed cell mask. Unlike the binned version, this feature remains sensitive to the exact LoG response values.
+  image: >
+    For the LoG response (the trace of the Hessian), negative skewness is typically associated with blob-like structures, values near zero with rod-like structures, and positive skewness with relatively homogeneous areas. At $\sigma=4$, the feature emphasizes coarser structures and retains the full response amplitudes.
+  biology: >
+    Negative values are associated with larger mitochondrial puncta or clumps, while values near zero are associated with thicker elongated tubules or bundles. Positive values suggest relatively uniform mitochondrial signal with little distinct structure at this coarser scale.
+
+gabor_s_2.0_g_1.0_l_8.0_2D_ngl_dcnu_d1_a0.0_2d_fbn_n32:
+  filter: "Gabor ($\\lambda=8$, $\\sigma=2$, $\\gamma=1$)"
+  stats: Dependence Count Non-Uniformity via NGLDM
+  title: Repetition of local response patterns
+  technical: >
+    Computes Dependence Count Non-Uniformity from an NGLDM of the Gabor response after discretization into 32 fixed-number bins. With neighborhood distance 1 and coarseness $\alpha=0$, only adjacent pixels in the same response bin are counted as dependent.
+  image: >
+    In this dataset, high values occurred primarily in patches which contain more repeated similarly responding neighborhoods.
+  biology: >
+    The feature should not be interpreted primarily as mitochondrial organization in the present dataset as it may reflect whether particular local Gabor-response neighborhood sizes dominate the mitochondrial pattern.
+
+gabor_s_4.0_g_1.0_l_8.0_2D_rlm_lrhge_2d_s_mrg_fbn_n32:
+  filter: "Gabor ($\\lambda=8$, $\\sigma=4$, $\\gamma=1$)"
+  stats: Long Run High Gray-Level Emphasis via GLRLM
+  title: Long, strong directional responses
+  technical: >
+    After discretizing the Gabor response into 32 fixed-number bins, merges two-dimensional GLRLMs across directions and computes Long Run High Gray-Level Emphasis, which jointly weights high response bins and long runs.
+  image: >
+    High values occur when strong Gabor responses form long contiguous runs. Short runs, weak responses, or both contribute less, so the feature combines response strength and spatial extent.
+  biology: >
+    High values may be associated with long mitochondrial tubules or aligned bundles that strongly match the Gabor filter. They do not by themselves demonstrate physical continuity, because adjacent fragments, non-mitochondrial edges, and imaging artifacts can also form long runs.
+
+cm_diff_var_d16_2d_avg_fbn_n32:
+  filter: "Unfiltered image"
+  stats: Difference Variance via GLCM
+  title: Variation in long-range intensity contrast
+  technical: >
+    After discretizing the image into 32 fixed-number gray-level bins, computes the variance of the gray-level-difference distribution in each two-dimensional GLCM at distance 16 and averages the resulting values across directions.
+  image: >
+    Measures how widely the intensity differences between pixel pairs 16 pixels apart are distributed. High values indicate that long-range pairs exhibit a broad mixture of weak and strong contrasts; low values indicate more consistent long-range contrast.
+  biology: >
+    May reflect heterogeneity in the large-scale distribution of mitochondrial signal, for example when dense mitochondrial regions coexist with signal-poor cytoplasm. Illumination, staining, and background variation can produce similar changes.
+
+log_s_2.0_ih_skew_fbn_n32:
+  filter: "LoG ($\\sigma=2$)"
+  stats: Skewness (of the 32-bin response histogram)
+  title: Asymmetry of fine-scale responses (binned)
+  technical: >
+    Discretizes the LoG responses into 32 fixed-number bins and computes the population skewness of the resulting gray-level histogram.
+  image: >
+    For the LoG response (the trace of the Hessian), negative skewness is typically associated with blob-like structures, values near zero with rod-like structures, and positive skewness with relatively homogeneous areas. Binning reduces sensitivity to small differences in response amplitude.
+  biology: >
+    Negative values are associated with small rounded mitochondrial puncta, as may occur in fragmented networks. Values near zero are associated with narrow elongated tubules, whereas positive values suggest relatively uniform or diffuse mitochondrial signal with little distinct fine-scale structure.
+
+log_s_1.0_cm_corr_d1_2d_s_mrg_fbn_n32:
+  filter: "LoG ($\\sigma=1$)"
+  stats: Correlation via GLCM
+  title: Local organization of fine mitochondrial detail
+  technical: >
+    Computes GLCM correlation between neighboring ($d=1$) LoG responses after discretization into 32 fixed-number bins. Two-dimensional GLCMs from different directions are merged before the feature is calculated.
+  image: >
+    Low values were associated mainly with diffuse, low-contrast, or weakly resolved fine-scale signal. High values occurred for clearly delineated neighboring responses, including both elongated tubules and groups of bright puncta. In this dataset the feature was strongly associated with local image gradients and intensity spread.
+  biology: >
+    May distinguish clearly resolved mitochondrial structures from diffuse or poorly contrasted signal, but does not uniquely separate connected tubules from puncta or fragments. High values indicate predictable local LoG-response organization, not physical network connectivity.
+
+wavelet_coif1_lh_level_2_invar_cm_info_corr2_d1_2d_s_mrg_fbn_n32:
+  filter: "Invariant Coiflet-1 wavelet (LH, level 2)"
+  stats: IMC2 (Information Correlation 2) via GLCM
+  title: Dependency of intermediate-scale directional detail
+  technical: >
+    From the pseudo-rotation-invariant level-2 Coiflet-1 LH response, discretized into 32 fixed-number bins, merges two-dimensional GLCMs across directions at distance 1 and computes IMC2 from their joint and marginal gray-level distributions.
+  image: >
+    Visual inspection did not reveal a single consistent morphological transition along this feature. Higher values sometimes showed more clearly resolved intermediate-scale structure, but tubules, fragments, puncta, and diffuse patterns occurred across the range. The feature is therefore better interpreted as a texture dependency measure than as an axis of a specific visible morphology.
+  biology: >
+    The feature may capture differences in the organization of mitochondrial signal at an intermediate spatial scale, but visual inspection does not support assigning it uniquely to connectivity, elongation, fragmentation, or punctateness.
+
+gabor_s_4.0_g_1.0_l_8.0_2D_rlm_rl_entr_2d_s_mrg_fbn_n32:
+  filter: "Gabor ($\\lambda=8$, $\\sigma=4$, $\\gamma=1$)"
+  stats: Run-Length Entropy via GLRLM
+  title: Diversity of directional response runs
+  technical: >
+    After discretizing the Gabor response into 32 fixed-number bins, merges two-dimensional GLRLMs across directions and computes the entropy of the joint response-level and run-length distribution.
+  image: >
+    Visual inspection did not show a single monotonic morphological transition: both low and high values included tubules, fragments, and puncta. Differences may instead involve the heterogeneity of structure widths, intensities, orientations, and spatial continuity, but these contributions cannot be separated reliably from the sampled fluorescence patches.
+  biology: >
+    May reflect heterogeneity in mitochondrial directional responses, but cannot be assigned uniquely to fragmentation, tubulation, or a mixture of the two from the sampled original images. Blur, contrast, and labeling heterogeneity may also influence the value.
+
+log_s_4.0_ih_skew_fbn_n32:
+  filter: "LoG ($\\sigma=4$)"
+  stats: Skewness (of the 32-bin response histogram)
+  title: Asymmetry of coarser-scale responses (binned)
+  technical: >
+    Discretizes the LoG responses into 32 fixed-number bins and computes the population skewness of the resulting gray-level histogram.
+  image: >
+    For the LoG response (the trace of the Hessian), negative skewness is typically associated with blob-like structures, values near zero with rod-like structures, and positive skewness with relatively homogeneous areas. At $\sigma=4$, the feature emphasizes coarser structures, while binning reduces sensitivity to small response-amplitude differences.
+  biology: >
+    Negative values are associated with larger mitochondrial puncta or clumps, while values near zero are associated with thicker elongated tubules or bundles. Positive values suggest relatively uniform mitochondrial signal with little distinct structure at this coarser scale.
